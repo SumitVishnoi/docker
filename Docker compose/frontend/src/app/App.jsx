@@ -1,19 +1,22 @@
-import axios from 'axios'
+import React, { useEffect } from 'react'
 import './App.css'
 import { useState } from 'react'
+import axios from "axios"
 
 function App() {
-  const [user, setUser] = useState([])
-  const response = axios.get("/api/user")
-  .then(res=> {
-    setUser(res.data)
-  })
+  const [users, setUsers] = useState([])
+  useEffect(()=> {
+    axios.get("/api/users")
+    .then((response)=> {
+      setUsers(response.data)
+    })
+  }, [])
 
   return (
     <div>
       <h1>Users</h1>
-      {user.map(user=> (
-        <p>{user.name}, {user.age}</p>
+      {users.map((user)=> (
+        <p>{user.name}</p>
       ))}
     </div>
   )

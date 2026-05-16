@@ -1,32 +1,42 @@
-import express from "express";
-import morgan from "morgan";
+import express from "express"
+import morgan from "morgan"
 
-const app = express();
-app.use(morgan("dev"));
-app.use(express.json());
+const app = express()
+app.use(morgan("dev"))
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get("/", (req, res)=> {
-    res.send("hello world")
+    res.status(200).json({
+        status: "OK"
+    })
 })
 
-app.get("/api/user", (req, res) => {
-  const users = [
-    {
-      name: "John",
-      age: 30,
-    },
-    { 
-      name: "Doe",
-      age: 25
-    },
-    { 
-      name: "Smith",
-      age: 40
-    },
-  ];
-  res.json(users);
-});
+app.get("/api/users", (req, res)=> {
+    const users = [
+        {
+            id: 1,
+            name: "John"
+        },
+        {
+            id: 2,
+            name: "Smith"
+        },
+        {
+            id: 3,
+            name: "Kane"
+        },
+        {
+            id: 4,
+            name: "Dutch"
+        },
+    ]
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+    res.status(200).json(users)
+})
+
+
+app.listen(3000, ()=> {
+    console.log("Server is running on port 3000")
+})
